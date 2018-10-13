@@ -880,3 +880,7 @@ config LRU_GEN_STATS
 source "mm/damon/Kconfig"
 
 endmenu
+
+config VMSTAT_INTERVAL
+	int "Default interval in seconds to update vmstat"
+	default 20
