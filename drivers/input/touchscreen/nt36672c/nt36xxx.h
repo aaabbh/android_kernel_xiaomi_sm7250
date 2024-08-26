@@ -56,7 +56,6 @@
 #define MI_DRM_NOTIFIER
 
 #define NVT_DEBUG 1
-#define TOUCH_DISABLE_LPM 1
 
 /*---GPIO number---*/
 #define NVTTOUCH_RST_PIN 980
