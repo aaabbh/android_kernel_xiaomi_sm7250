@@ -33,11 +33,13 @@ DEFCONFIG_PATH=arch/arm64/configs
 DEFCONFIG_NAME="vendor/${DEVICE}_defconfig";
 DISABLE_KSU_FRAGMENT=vendor/disable_ksu.config;
 
-LOCAL_VERSION_NUMBER=$(cat $DEFCONFIG_PATH/$DEFCONFIG_NAME | grep CONFIG_LOCALVERSION= | cut -d = -f 2 | sed 's/"//g' | sed 's/-Hanabi-//g')
-TARGET_KERNEL_MOD_VERSION=$(make kernelversion)-$LOCAL_VERSION_NUMBER;
-
 START_SEC=$(date +%s);
 CURRENT_TIME=$(date '+%Y-%m%d%H%M');
+
+LOCAL_VERSION_NUMBER=$(cat $DEFCONFIG_PATH/$DEFCONFIG_NAME | grep CONFIG_LOCALVERSION= | cut -d = -f 2 | sed 's/"//g' | sed 's/-Hanabi-//g')
+TARGET_KERNEL_MOD_VERSION=$LOCAL_VERSION_NUMBER-$(make kernelversion);
+
+TARGET_PACKAGED_KERNEL_NAME=$TARGET_KERNEL_NAME-$TARGET_KERNEL_MOD_VERSION-$CURRENT_TIME;
 
 ANYKERNEL_PATH=AnyKernel3;
 
@@ -104,9 +106,9 @@ generate_flashable(){
 
     echo ' Packaging flashable Kernel ';
     cd $ANYKERNEL_PATH;
-    zip -q -r $TARGET_KERNEL_NAME-$CURRENT_TIME-$TARGET_KERNEL_MOD_VERSION.zip *;
+    zip -q -r $TARGET_PACKAGED_KERNEL_NAME.zip *;
 
-    echo " Target File:  $OUT/$ANYKERNEL_PATH/$TARGET_KERNEL_NAME-$CURRENT_TIME-$TARGET_KERNEL_MOD_VERSION.zip ";
+    echo " Target File:  $OUT/$ANYKERNEL_PATH/$TARGET_PACKAGED_KERNEL_NAME.zip ";
 }
 
 save_defconfig(){
