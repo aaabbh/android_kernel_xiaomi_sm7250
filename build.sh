@@ -33,7 +33,8 @@ DEFCONFIG_PATH=arch/arm64/configs
 DEFCONFIG_NAME="vendor/${DEVICE}_defconfig";
 DISABLE_KSU_FRAGMENT=vendor/disable_ksu.config;
 
-TARGET_KERNEL_MOD_VERSION=$(make kernelversion);
+LOCAL_VERSION_NUMBER=$(cat $DEFCONFIG_PATH/$DEFCONFIG_NAME | grep CONFIG_LOCALVERSION= | cut -d = -f 2 | sed 's/"//g' | sed 's/-Hanabi-//g')
+TARGET_KERNEL_MOD_VERSION=$(make kernelversion)-$LOCAL_VERSION_NUMBER;
 
 START_SEC=$(date +%s);
 CURRENT_TIME=$(date '+%Y-%m%d%H%M');
