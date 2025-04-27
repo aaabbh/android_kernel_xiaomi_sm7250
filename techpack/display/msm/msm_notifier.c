@@ -38,6 +38,13 @@ struct display_list {
 
 static struct display_list *active_displays;
 
+static struct drm_panel *active_panel;
+struct drm_panel *get_active_panel(void)
+{
+	return active_panel;
+}
+EXPORT_SYMBOL(get_active_panel);
+
 static int msm_notifier_fps_chg_callback(struct notifier_block *nb,
 			unsigned long val, void *data)
 {
@@ -148,6 +155,8 @@ static int msm_notifier_probe(struct platform_device *pdev)
 		panel = of_drm_find_panel(node);
 		of_node_put(node);
 		if (!IS_ERR(panel)) {
+			active_panel = panel;
+
 			/*
 			 * Add new msm_display_fps_info to linked list
 			 * of active displays. Initialize fps as
