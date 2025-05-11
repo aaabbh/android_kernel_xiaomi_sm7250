@@ -90,7 +90,7 @@ generate_flashable(){
     
     if [ ! -d $ANYKERNEL_PATH ]; then
         echo ' Getting AnyKernel ';
-        git clone https://github.com/august-aosp/AnyKernel3.git $ANYKERNEL_PATH;
+        git clone --depth=1 https://github.com/august-aosp/AnyKernel3.git $ANYKERNEL_PATH;
         patch_kernel_properties;
     else
         echo ' Anykernel 3 Detected. Skipping download ';
